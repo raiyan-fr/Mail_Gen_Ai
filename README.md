@@ -1,3 +1,5 @@
 ## WORK IN PROGRESS
 
-# Dashboard not done
+```html
+<img src="\Workflow.png" alt="Worflow" width="500" />
+```
