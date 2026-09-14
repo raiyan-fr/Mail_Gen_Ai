@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: VITE_SERVER_API_URL || "http://localhost:3000/api",
+  baseURL: "http://localhost:3000/api", // add VITE_API_URL before deployement
   headers: {
     "Content-Type": "application/json",
   },

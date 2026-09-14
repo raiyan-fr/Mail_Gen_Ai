@@ -1,8 +1,9 @@
 import {
   ArrowRightIcon,
   SparklesIcon,
-  EnvelopeIcon,
   ClockIcon,
+  FolderOpenIcon,
+  EnvelopeIcon,
   ShieldCheckIcon,
   BoltIcon,
   CheckCircleIcon,
@@ -10,6 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useAuth } from "../context/authContext.jsx";
 import FeatureCard from "../components/FeatureCard.jsx";
+import Navbar from "../components/Navbar.jsx";
 import { Link } from "react-router";
 
 const Homepage = () => {
@@ -56,46 +58,7 @@ const Homepage = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       {/* ==================== HEADER ==================== */}
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-lg">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-red-600">
-              <EnvelopeIcon className="h-5 w-5" />
-            </div>
-            <span className="text-xl font-bold">
-              Mail<span className="text-red-400">Gen</span> AI
-            </span>
-          </Link>
-
-          {/* Auth buttons */}
-          <div className="flex items-center gap-3">
-            {user ? (
-              <Link
-                to="/dashboard"
-                className="hidden text-sm font-medium text-slate-300 transition hover:text-white sm:block"
-              >
-                Go to Dashboard
-              </Link>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  className="hidden text-sm font-medium text-slate-300 transition hover:text-white sm:block"
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/sign-up"
-                  className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold transition hover:bg-red-500"
-                >
-                  Get Started
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      </header>
+      <Navbar />
       {/* ==================== MAIN ==================== */}
       <main>
         {/* ==================== HERO ==================== */}
@@ -247,27 +210,46 @@ const Homepage = () => {
       <footer className="border-t border-white/10 bg-slate-950">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-10 md:flex-row md:items-center md:justify-between">
           <div>
-            <Link to="/" className="flex items-center gap-2">
+            <a
+              href="https://github.com/raiyan-fr/Mail_Gen_Ai"
+              className="flex items-center gap-2 "
+            >
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-600">
                 <EnvelopeIcon className="h-4 w-4" />
               </div>
-              <span className="font-bold">
-                Mail<span className="text-red-400">Gen</span> AI
+              <span className="font-bold hover:text-red-500">
+                (Repo) Mail<span className="text-red-400">Gen</span> AI
               </span>
-            </Link>
-            <p className="mt-2 text-sm text-slate-500">
-              AI-powered cold outreach, made simple.
+            </a>
+            <p className="flex mt-2 text-sm text-slate-500">
+              OpenSource <FolderOpenIcon className="h-4 w-4 ml-1 mt-0.5" />
             </p>
           </div>
           <div className="flex items-center gap-6 text-sm text-slate-400">
-            <a href="#features" className="hover:text-white">
-              Features
+            <span className="text-red-400">Connect Me:</span>
+            <a
+              href="https://github.com/raiyan-fr/"
+              className="hover:text-white"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Github
             </a>
-            <a href="#how-it-works" className="hover:text-white">
-              How it works
+            <a
+              href="https://linkedin.com/in/raiyanfr"
+              className="hover:text-white"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
             </a>
-            <a href="#about" className="hover:text-white">
-              About
+            <a
+              href="mailto:raiyankhan89957@gmail.com"
+              className="hover:text-white"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Gmail
             </a>
           </div>
         </div>

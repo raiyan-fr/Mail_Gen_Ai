@@ -1,7 +1,6 @@
-## WORK IN PROGRESS (MVP Done)
+## Mail Gen MVP
 
 - ToDo:
-  - create EmailHistory page
   - create protected routes for dashboard
   - add concurenncy for server and client
   - add setting input to take and store user info (optional)

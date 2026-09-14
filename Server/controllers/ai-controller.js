@@ -31,7 +31,29 @@ exports.generateEmail = async (req, res) => {
     });
   }
 
-  const systemPrompt = `You are an expert job outreach specialist. Based on the user's prompt, generate personalized and concise outreach content. Return ONLY valid JSON in this format: { "subject": "Email subject", "emailBody": "Cold email body", "linkedinDM": "Short LinkedIn message", "followUpEmail": "Follow-up email" } Keep the content professional, natural, persuasive, and tailored to the recipient. Avoid generic phrases, unnecessary fluff, and fabricated information. Each message should have a clear but natural call to action.`;
+  const systemPrompt = `You are an expert job outreach specialist.
+
+Based on the user's prompt, generate personalized and concise outreach content.
+
+You MUST return exactly one JSON object with these four string fields:
+
+{
+  "subject": "Email subject",
+  "emailBody": "Cold email body",
+  "linkedinDM": "Short LinkedIn message",
+  "followUpEmail": "Follow-up email"
+}
+
+Rules:
+- Return ONLY the JSON object.
+- Do NOT wrap the JSON in markdown code fences.
+- Do NOT return a JSON string.
+- Do NOT include any explanation before or after the JSON.
+- All four fields must contain strings.
+- Keep the content professional, natural, persuasive, and concise.
+- Tailor the content to the user's prompt.
+- Do not fabricate information.
+- Include a clear but natural call to action.`;
 
   try {
     const response = await ai.models.generateContent({
@@ -40,13 +62,42 @@ exports.generateEmail = async (req, res) => {
       config: {
         systemInstruction: systemPrompt,
         responseMimeType: "application/json",
-        maxOutputTokens: 1000,
-        temperature: 1.0,
+        maxOutputTokens: 1200,
+        temperature: 0.7,
       },
     });
 
-    const parsedData = JSON.parse(response.text || "{}");
+    const rawText = response.text?.trim();
+
+    console.log("Gemini raw response:", rawText);
+
+    if (!rawText) {
+      return res.status(500).json({
+        message: "AI returned an empty response",
+      });
+    }
+
+    let parsedData;
+
+    try {
+      parsedData = JSON.parse(rawText);
+    } catch (parseError) {
+      console.error("Failed to parse Gemini response:", parseError);
+      console.error("Raw Gemini response:", rawText); // need to be removed
+
+      return res.status(500).json({
+        message: "AI returned an invalid JSON response",
+      });
+    }
+
     const { subject, emailBody, linkedinDM, followUpEmail } = parsedData;
+
+    // Validate AI response
+    if (!subject || !emailBody || !linkedinDM || !followUpEmail) {
+      return res.status(500).json({
+        message: "AI response is missing required fields",
+      });
+    }
 
     // Save to EmailHistory
     const newEmail = await EmailHistory.create({
