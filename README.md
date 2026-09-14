@@ -8,6 +8,7 @@
   - add concurenncy for server and client
   - add setting input to take and store user info (optional)
   - add OAuth 2.0 For google signup/login
+  - Deployment
   - make a seperate Repo to create Mail Campaign for Mail Sending Automation
 
 ![Workflow](Workflow.png)
