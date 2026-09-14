@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
         setUser(JSON.parse(userInfo));
       } catch (error) {
         localStorage.removeItem("userInfo");
-        // localStorage.removeItem("token");
+        localStorage.removeItem("token");
 
         console.error("Error parsing userInfo from localStorage:", error);
       }

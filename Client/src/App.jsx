@@ -4,15 +4,13 @@ import Homepage from "./pages/homePage.jsx";
 import SignUp from "./pages/signUp.jsx";
 import VerifyOtp from "./pages/verifyOtp.jsx";
 import Login from "./pages/login.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Dashboard from "./pages/dashboard.jsx";
 import EmailHistory from "./pages/emailHistory.jsx";
 import Layout from "./components/Layout.jsx";
 
 function App() {
-  const { user, loading } = useAuth();
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const { user } = useAuth();
 
   return (
     <Routes>
@@ -29,9 +27,12 @@ function App() {
         path="/login"
         element={!user ? <Login /> : <Navigate to="/dashboard" />}
       />
-      <Route path="/dashboard" element={<Layout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="history" element={<EmailHistory />} />
+      {/* Protected routes */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard" element={<Layout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="history" element={<EmailHistory />} />
+        </Route>
       </Route>
     </Routes>
   );

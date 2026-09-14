@@ -52,7 +52,6 @@ exports.registerUser = async (req, res, next) => {
       otp,
       otpExpiry,
     });
-    res.status(201).json({ message: "User registered successfully", user });
 
     // otp sending logic
     try {
@@ -67,11 +66,10 @@ exports.registerUser = async (req, res, next) => {
         error: error.message,
       });
     }
+
+    res.status(201).json({ message: "User registered successfully", user });
   } catch (error) {
     next(error);
-    res
-      .status(400)
-      .json({ message: "Error registering user", error: error.message });
   }
 };
 
@@ -108,7 +106,7 @@ exports.verifyOtp = async (req, res) => {
 
     res.status(200).json({
       id: user._id,
-      name: user.name,
+      name: user.username,
       email: user.email,
       token: token,
       message: "Email verified successfully!",

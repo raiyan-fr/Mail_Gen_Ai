@@ -29,7 +29,7 @@ const Navbar = ({ collapsed = false }) => {
               <p className="text-sm text-slate-400">Welcome back,</p>
 
               <h2 className="text-lg font-semibold text-white">
-                {user?.user?.username || "User"}
+                {user?.username || "User"}
               </h2>
             </div>
 

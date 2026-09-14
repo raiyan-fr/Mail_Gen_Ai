@@ -21,16 +21,25 @@ const Login = () => {
 
     if (!email || !password) {
       toast.error("All fields are required");
+      return;
     }
 
     try {
       setLoading(true);
+
       const data = await loginUser({ email, password });
-      login(data);
-      toast.success("Login Successfully");
+
+      login({
+        ...data.user,
+        token: data.token,
+      });
+
+      toast.success(data.message || "Login successful");
       navigate("/dashboard");
     } catch (error) {
-      toast.error("login Failed");
+      console.error("Login error:", error);
+
+      toast.error(error.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }
